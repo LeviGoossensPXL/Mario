@@ -15,8 +15,8 @@ public class Window {
     private static Scene currentScene;
     private final int WIDTH, HEIGHT;
     private final String title;
-    private long glfwWindow;
     public float r, g, b, a;
+    private long glfwWindow;
 
     private Window() {
         this.WIDTH = 1920;
@@ -40,10 +40,11 @@ public class Window {
         switch (newScene) {
             case 0:
                 currentScene = new LevelEditorScene();
-                //currentScene.init();
+                currentScene.init();
                 break;
             case 1:
                 currentScene = new LevelScene();
+                currentScene.init();
                 break;
             default:
                 assert false : "Unkown scene '" + newScene + "'";
