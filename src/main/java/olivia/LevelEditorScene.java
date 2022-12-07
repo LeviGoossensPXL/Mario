@@ -78,7 +78,7 @@ public class LevelEditorScene extends Scene {
         int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
             int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
-            System.out.println("ERROR: 'default.glsl'\n\tVertex shader compilation failed.");
+            System.out.println("ERROR: 'default.glsl'\n\tVertex shader compilation failed");
             System.out.println(glGetShaderInfoLog(vertexID, len));
             assert false : "";
         }
@@ -93,7 +93,7 @@ public class LevelEditorScene extends Scene {
         success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
             int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
-            System.out.println("ERROR: 'default.glsl'\n\tFragment shader compilation failed.");
+            System.out.println("ERROR: 'default.glsl'\n\tFragment shader compilation failed");
             System.out.println(glGetShaderInfoLog(fragmentID, len));
             assert false : "";
         }
@@ -108,7 +108,7 @@ public class LevelEditorScene extends Scene {
         success = glGetProgrami(shaderProgram, GL_LINK_STATUS);
         if (success == GL_FALSE) {
             int len = glGetProgrami(shaderProgram, GL_INFO_LOG_LENGTH);
-            System.out.println("ERROR: 'default.glsl'\n\tLinking of shaders failed.");
+            System.out.println("ERROR: 'default.glsl'\n\tLinking of shaders failed");
             System.out.println(glGetProgramInfoLog(shaderProgram, len));
             assert false : "";
         }

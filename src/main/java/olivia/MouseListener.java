@@ -93,7 +93,7 @@ public class MouseListener {
         return get().isDragging;
     }
 
-    public static boolean mouseButtonDown(int button) {
+    public static boolean isMouseButtonDown(int button) {
         if (button < get().mouseButtonPressed.length) {
             return get().mouseButtonPressed[button];
         } else {

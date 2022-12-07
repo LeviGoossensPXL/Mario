@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
-    private static Window window = null;
+    private static Window window;
     private static Scene currentScene;
     private final int WIDTH, HEIGHT;
     private final String title;
@@ -54,7 +54,7 @@ public class Window {
     }
 
     public void run() {
-        System.out.println("[:Info:] Hello LWJGL " + Version.getVersion() + "!");
+        System.out.println("[:Info:] Hello LWJGL '" + Version.getVersion() + "'");
 
         init();
         loop();
@@ -74,7 +74,7 @@ public class Window {
 
         // Initialize GLFW
         if (!glfwInit()) {
-            throw new IllegalStateException("Unable to initialize GLFW.");
+            throw new IllegalStateException("Unable to initialize GLFW");
         }
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
@@ -84,7 +84,7 @@ public class Window {
         // Create the window
         glfwWindow = glfwCreateWindow(this.WIDTH, this.HEIGHT, this.title, NULL, NULL);
         if (glfwWindow == NULL) {
-            throw new IllegalStateException("Failed to create the GLFW window.");
+            throw new IllegalStateException("Failed to create the GLFW window");
         }
 
         // Set callbacks
