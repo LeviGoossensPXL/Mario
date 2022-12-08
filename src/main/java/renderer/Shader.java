@@ -1,6 +1,10 @@
 package renderer;
 
+import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
+
 import java.io.IOException;
+import java.nio.FloatBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -9,11 +13,10 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
 
+    private final String filepath;
     private int shaderProgramID;
-
     private String vertexSource;
     private String fragmentSource;
-    private final String filepath;
 
     public Shader(String filepath) {
         this.filepath = filepath;
@@ -42,6 +45,8 @@ public class Shader {
                         } else {
                             throw new IOException("More then one of type: '" + pattern + "' defined in'" + filepath + "'");
                         }
+                        System.out.println("'" + vertexSource + "'");
+                        System.out.println("'" + fragmentSource + "'");
                 }
             }
         } catch (IOException e) {
@@ -111,5 +116,12 @@ public class Shader {
     public void detach() {
         // Unbind shader program
         glUseProgram(0);
+    }
+
+    public void uploadMat4f(String varName, Matrix4f mat4) {
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        FloatBuffer matBuffer = BufferUtils.createFloatBuffer(16);
+        mat4.get(matBuffer);
+        glUniformMatrix4fv(varLocation, false, matBuffer);
     }
 }
