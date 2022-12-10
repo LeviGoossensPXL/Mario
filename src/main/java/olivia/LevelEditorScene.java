@@ -3,11 +3,13 @@ package olivia;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import renderer.Shader;
+import renderer.Texture;
 import util.Time;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
@@ -16,10 +18,10 @@ public class LevelEditorScene extends Scene {
 
     private float[] vertexArray = {
             // position                     // color                    // UV Coordinates
-            100.5f, 0.5f, 0.0f,             1.0f, 0.0f, 0.0f, 1.0f,     1, 0,   // Bottom right 0
-            0.5f, 100.5f, 0.0f,             0.0f, 1.0f, 0.0f, 1.0f,     0, 1,   // Top left     1
-            100.5f, 100.5f, 0.0f,           0.0f, 0.0f, 1.0f, 1.0f,     1, 1,   // Top Right    2
-            0.5f, 0.5f, 0.0f,               1.0f, 1.0f, 0.0f, 1.0f,     0, 0    // Bottom left  3
+            100.5f, 0.5f, 0.0f,             1.0f, 0.0f, 0.0f, 1.0f,     1, 1,   // Bottom right 0
+            0.5f, 100.5f, 0.0f,             0.0f, 1.0f, 0.0f, 1.0f,     0, 0,   // Top left     1
+            100.5f, 100.5f, 0.0f,           0.0f, 0.0f, 1.0f, 1.0f,     1, 0,   // Top Right    2
+            0.5f, 0.5f, 0.0f,               1.0f, 1.0f, 0.0f, 1.0f,     0, 1    // Bottom left  3
     };
 
     // IMPORTANT: Must be in counter-clockwise order
@@ -36,6 +38,7 @@ public class LevelEditorScene extends Scene {
     private int vaoID, vboID, eboID;
 
     private Shader defaultShader;
+    private Texture testTexture;
 
     public LevelEditorScene() {
 
@@ -43,9 +46,10 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
-        this.camera = new Camera(new Vector2f(200, 300));
+        this.camera = new Camera(new Vector2f(-200, -300));
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compileAndLink();
+        this.testTexture = new Texture("assets/images/mario.png");
 
         // ==================================================================================================================
         // Generate VAO, VBO, and EBO buffer objects, and send to GPU
@@ -88,8 +92,13 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-
         defaultShader.use();
+
+        // Upload texture to shader
+        defaultShader.uploadTexture("TEXTURE_SAMPLER", 0);
+        glActiveTexture(GL_TEXTURE0);
+        testTexture.bind();
+
         defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
         defaultShader.uploadMat4f("uView", camera.getViewMatrix());
         defaultShader.uploadFloat("uTime", Time.getTime());

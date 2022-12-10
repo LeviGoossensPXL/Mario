@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class Texture {
@@ -34,13 +35,28 @@ public class Texture {
         ByteBuffer image = stbi_load(filepath, height, width, channels, 0);
 
         if(image != null) {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0), 0,
-                    GL_RGBA, GL_UNSIGNED_BYTE, image);
+            if (channels.get(0) == 3) {
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width.get(0), height.get(0), 0,
+                        GL_RGB, GL_UNSIGNED_BYTE, image);
+            } else if (channels.get(0) == 4) {
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0), 0,
+                        GL_RGBA, GL_UNSIGNED_BYTE, image);
+            } else {
+                assert false : "Error: (Texture) Unkown number of channels '" + channels.get(0) + "'";
+            }
 
         } else {
-            System.out.println("Error: (Texture) Could not load image '" + filepath + "'");
-            assert false : "";
+            assert false : "Error: (Texture) Could not load image '" + filepath + "'";
         }
-        // https://www.youtube.com/watch?v=7i9oXEoe86Q&list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE&index=10 #19:05
+
+        stbi_image_free(image);
+    }
+
+    public void bind() {
+        glBindTexture(GL_TEXTURE_2D, textureID);
+    }
+
+    public void unbind() {
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 }
