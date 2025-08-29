@@ -5,6 +5,7 @@ import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import util.Time;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -79,6 +80,8 @@ public class Window {
     }
 
     private void loop() {
+        float beginTime = Time.getTime();
+        float endTime;
         while (!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
 
@@ -86,6 +89,11 @@ public class Window {
             glClear(GL_COLOR_BUFFER_BIT);
 
             glfwSwapBuffers(glfwWindow);
+
+            endTime = Time.getTime();
+            float deltaTime = endTime - beginTime;
+            beginTime = endTime; //to capture any lag between here and beginning of this loop
         }
+
     }
 }
