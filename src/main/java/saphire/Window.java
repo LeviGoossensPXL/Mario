@@ -59,6 +59,8 @@ public class Window {
             throw new IllegalStateException("Failed to create GLFW window.");
         }
 
+        MouseListener.registerCallbacks(glfwWindow);
+
         //make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
         //no wait time between frames
