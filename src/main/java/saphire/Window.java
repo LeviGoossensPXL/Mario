@@ -60,6 +60,7 @@ public class Window {
         }
 
         MouseListener.registerCallbacks(glfwWindow);
+        KeyListener.registerCallbacks(glfwWindow);
 
         //make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
