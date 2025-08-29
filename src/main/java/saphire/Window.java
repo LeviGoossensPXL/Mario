@@ -7,6 +7,8 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import util.Time;
 
+import java.awt.*;
+
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -14,16 +16,35 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
     @Getter(lazy = true)
-    private static final Window window = new Window();
+    private static final Window instance = new Window();
+
+    private static Scene currentScene = new LevelEditorScene();
 
     private String title;
     private int width, height;
     private long glfwWindow;
 
+    public float r = 1, g = 1, b = 1, a = 1;
+
     private Window() {
         this.width = 1920;
         this.height = 1080;
         this.title = "Mario Maker";
+    }
+
+    public static void changeScene(SceneType newScene) {
+        switch (newScene) {
+            case SceneType.LevelEditorScene:
+                currentScene = new LevelEditorScene();
+                break;
+            case SceneType.LevelScene:
+                currentScene = new LevelScene();
+                break;
+            default:
+                assert false : "Unknown scene: " + newScene;
+                break;
+        }
+        System.out.println("Current scene: " + currentScene.toString());
     }
 
     public void run() {
@@ -81,17 +102,20 @@ public class Window {
 
     private void loop() {
         float beginTime = Time.getTime();
-        float endTime;
+        float endTime = Time.getTime();
+        float deltaTime = endTime - beginTime;
         while (!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
 
-            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            currentScene.update(deltaTime);
 
             glfwSwapBuffers(glfwWindow);
 
             endTime = Time.getTime();
-            float deltaTime = endTime - beginTime;
+            deltaTime = endTime - beginTime;
             beginTime = endTime; //to capture any lag between here and beginning of this loop
         }
 
