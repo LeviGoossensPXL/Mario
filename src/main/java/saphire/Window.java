@@ -108,6 +108,7 @@ public class Window {
         System.out.println("GL_RENDERER: " + glGetString(GL_RENDERER));
         System.out.println("GL_VERSION : " + glGetString(GL_VERSION));
         GLUtil.setupDebugMessageCallback();
+        Window.changeScene(SceneType.LevelScene);
     }
 
     private void loop() {

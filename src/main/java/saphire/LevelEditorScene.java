@@ -158,6 +158,9 @@ public class LevelEditorScene extends Scene {
         // Bind the VAO that we're using
         glBindVertexArray(vaoID);
 
+        int boundVAO = glGetInteger(GL_VERTEX_ARRAY_BINDING);
+        int boundEBO = glGetInteger(GL_ELEMENT_ARRAY_BUFFER_BINDING);
+        System.out.println("VAO bound: " + boundVAO + " | EBO bound: " + boundEBO);
 
         glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0); // causes opengl to crash
 
