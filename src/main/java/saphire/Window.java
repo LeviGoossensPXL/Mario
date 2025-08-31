@@ -36,9 +36,11 @@ public class Window {
         switch (newScene) {
             case SceneType.LevelEditorScene:
                 currentScene = new LevelEditorScene();
+                currentScene.init();
                 break;
             case SceneType.LevelScene:
                 currentScene = new LevelScene();
+                currentScene.init();
                 break;
             default:
                 assert false : "Unknown scene: " + newScene;
