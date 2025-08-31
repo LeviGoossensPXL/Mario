@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class LevelEditorScene extends Scene {
 
-    private String vertexShaderSrc = "#version 330 core\n" +
+    private String vertexShaderSrc = "#version 460 core\n" +
             "layout (location=0) in vec3 aPos;\n" +
             "layout (location=1) in vec4 aColor;\n" +
             "\n" +
@@ -24,7 +24,7 @@ public class LevelEditorScene extends Scene {
             "    gl_Position = vec4(aPos, 1.0);\n" +
             "}";
 
-    private String fragmentShaderSrc = "#version 330 core\n" +
+    private String fragmentShaderSrc = "#version 460 core\n" +
             "in vec4 fColor;\n" +
             "\n" +
             "out vec4 color;\n" +
@@ -64,9 +64,7 @@ public class LevelEditorScene extends Scene {
 
                     x3      x1
              */
-//            0, 2, 1,
-//            0, 1, 3,
-            2, 1, 0,
+            0, 2, 1,
             0, 1, 3,
     };
 
@@ -120,28 +118,7 @@ public class LevelEditorScene extends Scene {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
-        glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0); // causes crash: crashlog below
-        //# A fatal error has been detected by the Java Runtime Environment:
-        //#
-        //#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffd0aee8f0a, pid=24456, tid=35932
-        //#
-        //# JRE version: OpenJDK Runtime Environment (24.0.2+12) (build 24.0.2+12-54)
-        //# Java VM: OpenJDK 64-Bit Server VM (24.0.2+12-54, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
-        //# Problematic frame:
-        //# C  [nvoglv64.dll+0x918f0a]
-        //#
-        //# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
-        //#
-        //# An error report file with more information is saved as:
-        //# D:\Programming\java\Mario\hs_err_pid24456.log
-        //[0.701s][warning][os] Loading hsdis library failed
-        //#
-        //# If you would like to submit a bug report, please visit:
-        //#   https://bugreport.java.com/bugreport/crash.jsp
-        //# The crash happened outside the Java Virtual Machine in native code.
-        //# See problematic frame for where to report the bug.
-        //#
-        //2 actionable tasks: 1 executed, 1 up-to-date
+        glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);

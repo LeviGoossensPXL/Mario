@@ -12,6 +12,7 @@ import java.awt.*;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.GL_SHADING_LANGUAGE_VERSION;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
