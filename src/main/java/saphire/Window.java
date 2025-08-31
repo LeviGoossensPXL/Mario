@@ -12,6 +12,7 @@ import java.awt.*;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.GL_SHADING_LANGUAGE_VERSION;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -36,9 +37,11 @@ public class Window {
         switch (newScene) {
             case SceneType.LevelEditorScene:
                 currentScene = new LevelEditorScene();
+                currentScene.init();
                 break;
             case SceneType.LevelScene:
                 currentScene = new LevelScene();
+                currentScene.init();
                 break;
             default:
                 assert false : "Unknown scene: " + newScene;
@@ -98,19 +101,23 @@ public class Window {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
+        Window.changeScene(SceneType.LevelEditorScene);
     }
 
     private void loop() {
         float beginTime = Time.getTime();
         float endTime = Time.getTime();
         float deltaTime = endTime - beginTime;
+
         while (!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
 
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            currentScene.update(deltaTime);
+            if (deltaTime >= 0) {
+                currentScene.update(deltaTime);
+            }
 
             glfwSwapBuffers(glfwWindow);
 
