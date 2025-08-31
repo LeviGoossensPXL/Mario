@@ -1,8 +1,8 @@
 package saphire;
 
 import org.lwjgl.BufferUtils;
-import util.Shader;
 import org.lwjgl.opengl.GL20;
+import renderer.Shader;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -69,6 +69,7 @@ public class LevelEditorScene extends Scene {
     };
 
     private int vaoID, vboID, eboID;
+    private Shader defaultShader;
 
     public LevelEditorScene() {
 
@@ -76,10 +77,8 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
-        vertexID = Shader.createShader(GL_VERTEX_SHADER, vertexShaderSrc);
-        fragmentID = Shader.createShader(GL_FRAGMENT_SHADER, fragmentShaderSrc);
-        shaderProgram = Shader.linkShader(vertexID, fragmentID);
-
+        defaultShader = new Shader("assets/shaders/default.glsl");
+        defaultShader.compileAndLink();
 
         vaoID = glGenVertexArrays();
         glBindVertexArray(vaoID);
@@ -112,7 +111,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-        glUseProgram(shaderProgram);
+        defaultShader.use();
         glBindVertexArray(vaoID);
 
         glEnableVertexAttribArray(0);
@@ -125,6 +124,6 @@ public class LevelEditorScene extends Scene {
 
         glBindVertexArray(0);
 
-        glUseProgram(0);
+        defaultShader.detach();
     }
 }
