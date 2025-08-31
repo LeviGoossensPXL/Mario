@@ -12,8 +12,7 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class LevelEditorScene extends Scene {
 
-    private String vertexShaderSrc = "#type vertex" +
-            "#version 330 core\n" +
+    private String vertexShaderSrc = "#version 330 core\n" +
             "layout (location=0) in vec3 aPos;\n" +
             "layout (location=1) in vec4 aColor;\n" +
             "\n" +
@@ -25,8 +24,7 @@ public class LevelEditorScene extends Scene {
             "    gl_Position = vec4(aPos, 1.0);\n" +
             "}";
 
-    private String fragmentShaderSrc = "#type fragment\n" +
-            "#version 330 core\n" +
+    private String fragmentShaderSrc = "#version 330 core\n" +
             "in vec4 fColor;\n" +
             "\n" +
             "out vec4 color;\n" +
