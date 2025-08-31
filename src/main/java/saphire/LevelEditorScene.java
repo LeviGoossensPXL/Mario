@@ -1,13 +1,128 @@
 package saphire;
 
+import org.lwjgl.BufferUtils;
+import util.Shader;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+
 public class LevelEditorScene extends Scene {
+
+    private String vertexShaderSrc = "layout (location=0) in vec3 aPos;\n" +
+            "layout (location=1) in vec4 aColor;\n" +
+            "\n" +
+            "out vec4 fColor;\n" +
+            "\n" +
+            "void main()\n" +
+            "{\n" +
+            "    fColor = aColor;\n" +
+            "    gl_Position = vec4(aPos, 1.0);\n" +
+            "}";
+
+    private String fragmentShaderSrc = "in vec4 fColor;\n" +
+            "\n" +
+            "out vec4 color;\n" +
+            "\n" +
+            "void main()\n" +
+            "{\n" +
+            "    color = fColor;\n" +
+            "}";
+
+    private int vertexID, fragmentID, shaderProgram;
+
+    private float[] vertexArray = {
+            // position             // color
+            0.5f, -0.5f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f, // bottom right     0
+            -0.5f, 0.5f, 0.0f,      0.0f, 1.0f, 0.0f, 1.0f, // top left         1
+            0.5f, 0.5f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, // top right        2
+            -0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f, // bottom left      3
+    };
+
+    // IMPORTANT: Must be in counter-clockwise order
+    private int[] elementArray = {
+            /*  vertex array order
+                    x1      x2
+
+
+                    x3      x0
+
+
+            counter-clockwise order
+                    x3      x2
+
+
+                    x       x1
+
+                    x2      x
+
+
+                    x3      x1
+             */
+            0, 2, 1,
+            0, 1, 3,
+    };
+
+    private int vaoID, vboID, eboID;
 
     public LevelEditorScene() {
 
     }
 
     @Override
-    public void update(float dt) {
+    public void init() {
+        vertexID = Shader.createShader(GL_VERTEX_SHADER, vertexShaderSrc);
+        fragmentID = Shader.createShader(GL_FRAGMENT_SHADER, fragmentShaderSrc);
+        shaderProgram = Shader.linkShader(vertexID, fragmentID);
 
+
+        vaoID = glGenVertexArrays();
+        glBindVertexArray(vaoID);
+
+
+        FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertexArray.length);
+        vertexBuffer.put(vertexArray).flip();
+
+        vboID = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vboID);
+        glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
+
+        IntBuffer elementBuffer = BufferUtils.createIntBuffer(elementArray.length);
+        elementBuffer.put(elementArray).flip();
+
+        eboID = glGenBuffers();
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
+
+        int positionsSize = 3;
+        int colorsSize = 4;
+        int floatsSize = 4;
+        int vertexSizeBytes = (positionsSize + colorsSize) * floatsSize;
+        glVertexAttribPointer(0, positionsSize, GL_FLOAT, false, vertexSizeBytes, 0);
+        glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1, colorsSize, GL_FLOAT, false, vertexSizeBytes, positionsSize * floatsSize);
+        glEnableVertexAttribArray(1);
+    }
+
+    @Override
+    public void update(float dt) {
+        glUseProgram(shaderProgram);
+        glBindVertexArray(vaoID);
+
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
+        glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0);
+
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+
+        glBindVertexArray(0);
+
+        glUseProgram(0);
     }
 }
