@@ -106,13 +106,16 @@ public class Window {
         float beginTime = Time.getTime();
         float endTime = Time.getTime();
         float deltaTime = endTime - beginTime;
+
         while (!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
 
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            currentScene.update(deltaTime);
+            if (deltaTime >= 0) {
+                currentScene.update(deltaTime);
+            }
 
             glfwSwapBuffers(glfwWindow);
 
