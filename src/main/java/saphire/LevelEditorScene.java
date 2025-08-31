@@ -114,13 +114,13 @@ public class LevelEditorScene extends Scene {
         defaultShader.use();
         glBindVertexArray(vaoID);
 
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
+        //glEnableVertexAttribArray(0); // seemingly needed in tutorial, seemingly unneeded according to chatGPT and running program
+        //glEnableVertexAttribArray(1); // seemingly needed in tutorial, seemingly unneeded according to chatGPT and running program
 
         glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0);
 
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+        //glDisableVertexAttribArray(0); // seemingly needed in tutorial, seemingly unneeded according to chatGPT and running program
+        //glDisableVertexAttribArray(1); // seemingly needed in tutorial, seemingly unneeded according to chatGPT and running program
 
         glBindVertexArray(0);
 
