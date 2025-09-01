@@ -12,6 +12,8 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
 public class LevelEditorScene extends Scene {
+    float dx = 50.0f;
+    float dy = 50.0f;
 
     private String vertexShaderSrc = "#version 460 core\n" +
             "layout (location=0) in vec3 aPos;\n" +
@@ -39,10 +41,10 @@ public class LevelEditorScene extends Scene {
 
     private float[] vertexArray = {
             // position             // color
-            50.0f, -50.0f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f, // bottom right     0
-            -50.0f, 50.0f, 0.0f,      0.0f, 1.0f, 0.0f, 1.0f, // top left         1
-            50.0f, 50.0f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, // top right        2
-            -50.0f, -50.0f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f, // bottom left      3
+            100.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f, // bottom right     0
+            -0.0f, 100.0f, 0.0f,      0.0f, 1.0f, 0.0f, 1.0f, // top left         1
+            100.0f, 100.0f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, // top right        2
+            0.0f, 0.0f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f, // bottom left      3
     };
 
     // IMPORTANT: Must be in counter-clockwise order
@@ -113,7 +115,23 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-        camera.position.x -= dt * 50.0f;
+
+        camera.position.x -= dt * dx;
+        camera.position.y -= dt * dy;
+        if (camera.position.x < -1180) {
+            dx = -50;
+        }
+        if (camera.position.y < -572) {
+            dy = -50;
+        }
+        if (camera.position.x > 0) {
+            dx = 50;
+        }
+        if (camera.position.y > 0) {
+            dy = 50;
+        }
+
+        System.out.println("camera position: " + camera.position.x + ", " + camera.position.y);
         defaultShader.use();
         defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
         defaultShader.uploadMat4f("uView", camera.getViewMatrix());
