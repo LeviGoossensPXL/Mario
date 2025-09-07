@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 import renderer.Shader;
+import util.Time;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -39,10 +40,10 @@ public class LevelEditorScene extends Scene {
 
     private float[] vertexArray = {
             // position             // color
-            50.0f, -50.0f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f, // bottom right     0
-            -50.0f, 50.0f, 0.0f,      0.0f, 1.0f, 0.0f, 1.0f, // top left         1
-            50.0f, 50.0f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, // top right        2
-            -50.0f, -50.0f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f, // bottom left      3
+            100.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f, // bottom right     0
+            0.0f, 100.0f, 0.0f,      0.0f, 1.0f, 0.0f, 1.0f, // top left         1
+            100.0f, 100.0f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, // top right        2
+            0.0f, 0.0f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f, // bottom left      3
     };
 
     // IMPORTANT: Must be in counter-clockwise order
