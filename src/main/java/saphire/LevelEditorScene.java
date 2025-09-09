@@ -1,5 +1,7 @@
 package saphire;
 
+import components.FontRenderer;
+import components.SpriteRenderer;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
@@ -78,6 +80,7 @@ public class LevelEditorScene extends Scene {
     private Texture testTexture; //test texture
 
     GameObject testObject;
+    boolean firstTime = true;
 
     public LevelEditorScene() {
 
@@ -85,7 +88,11 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
-        testObject = new GameObject("test object");
+        System.out.println("creating test object 1");
+        testObject = new GameObject("test object 1");
+        testObject.addComponent(new FontRenderer());
+        testObject.addComponent(new SpriteRenderer());
+        addGameObjectToScene(this.testObject);
 
         this.camera = new Camera(new Vector2f());
         defaultShader = new Shader("assets/shaders/default.glsl");
@@ -148,5 +155,17 @@ public class LevelEditorScene extends Scene {
         glBindVertexArray(0);
 
         defaultShader.detach();
+        if (firstTime) {
+            System.out.println("creating test object 2");
+            GameObject go1 = new GameObject("test object 2");
+            go1.addComponent(new SpriteRenderer());
+            addGameObjectToScene(go1);
+            firstTime = false;
+        }
+
+
+        for (GameObject gameObject: gameObjects) {
+            gameObject.update(dt);
+        }
     }
 }
