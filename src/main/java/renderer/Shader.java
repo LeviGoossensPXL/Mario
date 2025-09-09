@@ -123,6 +123,12 @@ public class Shader {
         glUniform1i(varLocation, val);
     }
 
+    public void uploadTexture(String varName, int textureID) {
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform1i(varLocation, textureID);
+    }
+
     private int compileShader(int shaderType, String shaderSource){
         // compile and link shaders
         int shaderID = glCreateShader(shaderType);
