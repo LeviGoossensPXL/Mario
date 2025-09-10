@@ -15,7 +15,7 @@ public class KeyListener {
     }
 
     public static void keyCallback(long window, int key, int scanCode, int action, int mods) {
-        if (key <= 0 ||key >= getInstance().keyPressed.length) {
+        if (key <= 0 || key >= getInstance().keyPressed.length) {
             return; // key int value we cant store
         }
         if (action == GLFW_PRESS) {
