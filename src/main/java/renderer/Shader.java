@@ -54,9 +54,6 @@ public class Shader {
             e.printStackTrace();
             assert false : "Error: could not open shader file: '" + filepath + "'";
         }
-
-//        System.out.println("vertex source : " + vertexSource);
-//        System.out.println("fragment source : " + fragmentSource);
     }
 
     public void compileAndLink() {
@@ -77,6 +74,7 @@ public class Shader {
         beingUsed = false;
     }
 
+    // region upload methods
     public void uploadMat4f(String varName, Matrix4f mat4) {
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
         use();
@@ -128,6 +126,7 @@ public class Shader {
         use();
         glUniform1i(varLocation, textureID);
     }
+    // endregion
 
     private int compileShader(int shaderType, String shaderSource){
         // compile and link shaders

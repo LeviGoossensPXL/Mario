@@ -18,30 +18,6 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class LevelEditorScene extends Scene {
 
-    private String vertexShaderSrc = "#version 460 core\n" +
-            "layout (location=0) in vec3 aPos;\n" +
-            "layout (location=1) in vec4 aColor;\n" +
-            "\n" +
-            "out vec4 fColor;\n" +
-            "\n" +
-            "void main()\n" +
-            "{\n" +
-            "    fColor = aColor;\n" +
-            "    gl_Position = vec4(aPos, 1.0);\n" +
-            "}";
-
-    private String fragmentShaderSrc = "#version 460 core\n" +
-            "in vec4 fColor;\n" +
-            "\n" +
-            "out vec4 color;\n" +
-            "\n" +
-            "void main()\n" +
-            "{\n" +
-            "    color = fColor;\n" +
-            "}";
-
-    private int vertexID, fragmentID, shaderProgram;
-
     private float[] vertexArray = {
             // position                // color                     //
             100.0f, 0.0f,   0.0f,       1.0f, 0.0f, 0.0f, 1.0f,     1, 1,  // bottom right     0
@@ -144,13 +120,7 @@ public class LevelEditorScene extends Scene {
         defaultShader.uploadMat4f("uView", camera.getViewMatrix());
         glBindVertexArray(vaoID);
 
-        //glEnableVertexAttribArray(0); // seemingly needed in tutorial, seemingly unneeded according to chatGPT and running program
-        //glEnableVertexAttribArray(1); // seemingly needed in tutorial, seemingly unneeded according to chatGPT and running program
-
         glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0);
-
-        //glDisableVertexAttribArray(0); // seemingly needed in tutorial, seemingly unneeded according to chatGPT and running program
-        //glDisableVertexAttribArray(1); // seemingly needed in tutorial, seemingly unneeded according to chatGPT and running program
 
         glBindVertexArray(0);
 
@@ -162,7 +132,6 @@ public class LevelEditorScene extends Scene {
             addGameObjectToScene(go1);
             firstTime = false;
         }
-
 
         for (GameObject gameObject: gameObjects) {
             gameObject.update(dt);
