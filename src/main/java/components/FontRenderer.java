@@ -4,6 +4,8 @@ import saphire.Component;
 
 public class FontRenderer extends Component {
 
+    private int timesLooped = 0;
+
     @Override
     public void start() {
         if (gameObject.getComponent(SpriteRenderer.class) != null) {
@@ -13,6 +15,9 @@ public class FontRenderer extends Component {
 
     @Override
     public void update(float dt) {
-
+        if (timesLooped < 5) {
+            System.out.println("Fontrenderer is updating " + this.toString());
+            timesLooped++;
+        }
     }
 }
