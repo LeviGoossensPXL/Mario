@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
@@ -23,35 +26,13 @@ public class Shader {
         this.filepath = filepath;
         try {
             String source = new String(Files.readAllBytes(Paths.get(filepath)));
-            String[] split = source.split("(#type)( )+([a-zA-Z]+)");
-
-            int start = source.indexOf("#type") + "#type ".length();
-            int end = source.indexOf(System.lineSeparator(), start);
-            String firstPattern = source.substring(start, end).trim();
-
-            start = source.indexOf("#type", end) + "#type ".length();
-            end = source.indexOf(System.lineSeparator(), start);
-            String secondPattern = source.substring(start, end).trim();
-
-            if (firstPattern.equals("vertex")) {
-                vertexSource = split[1];
-            } else if (firstPattern.equals("fragment")) {
-                fragmentSource = split[1];
-            } else {
-                throw new IOException("Unexpected token: '" + firstPattern + "'");
-            }
-
-            if (secondPattern.equals("vertex")) {
-                vertexSource = split[2];
-            } else if (secondPattern.equals("fragment")) {
-                fragmentSource = split[2];
-            } else {
-                throw new IOException("Unexpected token: '" + secondPattern + "'");
-            }
+            vertexSource = getShaderString(source, GL_VERTEX_SHADER);
+            fragmentSource = getShaderString(source, GL_FRAGMENT_SHADER);
         } catch (IOException e) {
             e.printStackTrace();
             assert false : "Error: could not open shader file: '" + filepath + "'";
         }
+
     }
 
     public void compileAndLink() {
@@ -125,6 +106,26 @@ public class Shader {
         glUniform1i(varLocation, textureID);
     }
     // endregion
+
+    private String getShaderString(String source, int shaderType) {
+        String[] split = source.split("(#type)( )+([a-zA-Z]+)");
+
+        int start = 0;
+        int end = 0;
+
+        for (int i = 1; i < split.length; i++) { // skip first string in split array
+            start = source.indexOf("#type", end) + "#type ".length();
+            end = source.indexOf(System.lineSeparator(), start);
+            String pattern = source.substring(start, end).trim();
+
+            if (pattern.equals("vertex") && shaderType == GL_VERTEX_SHADER) {
+                return split[i];
+            } else if (pattern.equals("fragment") && shaderType == GL_FRAGMENT_SHADER) {
+                return split[i];
+            }
+        }
+        return null;
+    }
 
     private int compileShader(int shaderType, String shaderSource) {
         // compile and link shaders
