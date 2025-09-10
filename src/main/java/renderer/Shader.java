@@ -10,8 +10,6 @@ import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class Shader {
     private int shaderProgramID;
@@ -128,7 +126,7 @@ public class Shader {
     }
     // endregion
 
-    private int compileShader(int shaderType, String shaderSource){
+    private int compileShader(int shaderType, String shaderSource) {
         // compile and link shaders
         int shaderID = glCreateShader(shaderType);
         glShaderSource(shaderID, shaderSource);

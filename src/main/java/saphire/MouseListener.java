@@ -37,8 +37,7 @@ public class MouseListener {
             if (button < getInstance().mouseButtonPressed.length) {
                 getInstance().mouseButtonPressed[button] = true;
             }
-        }
-        else if (action == GLFW_RELEASE) {
+        } else if (action == GLFW_RELEASE) {
             if (button < getInstance().mouseButtonPressed.length) {
                 getInstance().mouseButtonPressed[button] = false;
                 getInstance().isDragging = false;
@@ -69,27 +68,27 @@ public class MouseListener {
     }
 
     public static float getX() {
-        return (float)getInstance().xPos;
+        return (float) getInstance().xPos;
     }
 
     public static float getY() {
-        return (float)getInstance().yPos;
+        return (float) getInstance().yPos;
     }
 
     public static float getDx() {
-        return (float)(getInstance().lastX - getInstance().xPos);
+        return (float) (getInstance().lastX - getInstance().xPos);
     }
 
     public static float getDy() {
-        return (float)(getInstance().lastY - getInstance().yPos);
+        return (float) (getInstance().lastY - getInstance().yPos);
     }
 
     public static float getScrollX() {
-        return (float)getInstance().scrollX;
+        return (float) getInstance().scrollX;
     }
 
     public static float getScrollY() {
-        return (float)getInstance().scrollY;
+        return (float) getInstance().scrollY;
     }
 
     //isDragging with lombok.@Getter

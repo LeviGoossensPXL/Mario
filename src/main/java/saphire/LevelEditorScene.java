@@ -4,26 +4,25 @@ import components.FontRenderer;
 import components.SpriteRenderer;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL20;
 import renderer.Shader;
 import renderer.Texture;
-import util.Time;
 
 import java.io.File;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class LevelEditorScene extends Scene {
 
     private float[] vertexArray = {
             // position                // color                     //
-            100.0f, 0.0f,   0.0f,       1.0f, 0.0f, 0.0f, 1.0f,     1, 1,  // bottom right     0
-            0.0f,   100.0f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f,     0, 0,  // top left         1
-            100.0f, 100.0f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f,     1, 0,  // top right        2
-            0.0f,   0.0f,   0.0f,       1.0f, 1.0f, 0.0f, 1.0f,     0, 1   // bottom left      3
+            100.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1, 1,  // bottom right     0
+            0.0f, 100.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0, 0,  // top left         1
+            100.0f, 100.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1, 0,  // top right        2
+            0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0, 1   // bottom left      3
     };
 
     // IMPORTANT: Must be in counter-clockwise order
@@ -133,7 +132,7 @@ public class LevelEditorScene extends Scene {
             firstTime = false;
         }
 
-        for (GameObject gameObject: gameObjects) {
+        for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
         }
     }
