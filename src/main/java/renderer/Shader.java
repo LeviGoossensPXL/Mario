@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
@@ -110,7 +107,7 @@ public class Shader {
     private String getShaderString(String source, int shaderType) {
         String[] split = source.split("(//type)( )+([a-zA-Z]+)");
 
-        int start = 0;
+        int start;
         int end = 0;
 
         for (int i = 1; i < split.length; i++) { // skip first string in split array

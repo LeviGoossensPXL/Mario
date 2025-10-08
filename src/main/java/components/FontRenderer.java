@@ -16,7 +16,7 @@ public class FontRenderer extends Component {
     @Override
     public void update(float dt) {
         if (timesLooped < 5) {
-            System.out.println("Fontrenderer is updating " + this.toString());
+            System.out.println("Fontrenderer is updating " + this);
             timesLooped++;
         }
     }
