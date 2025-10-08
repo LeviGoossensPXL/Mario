@@ -108,13 +108,13 @@ public class Shader {
     // endregion
 
     private String getShaderString(String source, int shaderType) {
-        String[] split = source.split("(#type)( )+([a-zA-Z]+)");
+        String[] split = source.split("(//type)( )+([a-zA-Z]+)");
 
         int start = 0;
         int end = 0;
 
         for (int i = 1; i < split.length; i++) { // skip first string in split array
-            start = source.indexOf("#type", end) + "#type ".length();
+            start = source.indexOf("//type", end) + "//type ".length();
             end = source.indexOf(System.lineSeparator(), start);
             String pattern = source.substring(start, end).trim();
 
