@@ -15,9 +15,7 @@ public class Texture {
     private File file;
 
     public Texture(File file) {
-        if (!file.exists() || !file.isFile()) {
-            assert false : "Error: File does not exist or is not a file!";
-        }
+        assert file.exists() && file.isFile() : "Error: File does not exist or is not a file!";
         this.file = file;
 
         textureID = glGenTextures();
