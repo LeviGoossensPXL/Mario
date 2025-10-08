@@ -1,4 +1,4 @@
-#type vertex
+//type vertex
 #version 460 core
 layout (location=0) in vec3 aPos;
 layout (location=1) in vec4 aColor;
@@ -17,7 +17,7 @@ void main()
     gl_Position = uProjection * uView * vec4(aPos, 1.0);
 }
 
-#type fragment
+//type fragment
 #version 460 core
 in vec4 fColor;
 in vec2 fTexCoords;
