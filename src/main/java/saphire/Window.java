@@ -15,7 +15,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Window {
     @Getter(lazy = true)
     private static final Window instance = new Window();
-
+    @Getter
     private static Scene currentScene = new LevelEditorScene();
 
     private String title;

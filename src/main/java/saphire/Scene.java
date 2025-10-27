@@ -1,10 +1,13 @@
 package saphire;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scene {
 
+    @Getter
     protected Camera camera;
     private boolean isRunning;
     protected List<GameObject> gameObjects = new ArrayList<>();
