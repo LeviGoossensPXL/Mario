@@ -1,32 +1,11 @@
 package renderer;
 
-import components.FontRenderer;
 import components.SpriteRenderer;
 import lombok.Getter;
-import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.BufferUtils;
-import saphire.Camera;
-import saphire.GameObject;
 import saphire.Window;
 
-import java.io.File;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
-import static org.lwjgl.opengl.GL11.glDrawElements;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-import static org.lwjgl.opengl.GL15.glBufferData;
-import static org.lwjgl.opengl.GL15.glGenBuffers;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
@@ -63,7 +42,7 @@ public class RenderBatch {
         // 4 vertices quads
         vertices = new float[maxBatchSize * 4 * VERTEX_SIZE];
         this.numSprites = 0;
-        this.hasRoom = false;
+        this.hasRoom = true;
     }
 
     public void start() {
@@ -94,9 +73,31 @@ public class RenderBatch {
 
         loadVertexProperties(index);
 
-        if (numSprites >= maxBatchSize) {
-            hasRoom = false;
+        if (this.numSprites >= this.maxBatchSize) {
+            this.hasRoom = false;
         }
+    }
+
+    public void render() {
+        // TODO For now we rebuffer all data every frame
+        glBindBuffer(GL_ARRAY_BUFFER, vboID);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+
+        shader.use();
+        shader.uploadMat4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
+
+        glBindVertexArray(vaoID);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
+        glDrawElements(GL_TRIANGLES, numSprites * 6, GL_UNSIGNED_INT, 0);
+
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glBindVertexArray(0);
+
+        shader.detach();
     }
 
     private void loadVertexProperties(int index) {
@@ -129,32 +130,10 @@ public class RenderBatch {
         offset += VERTEX_SIZE;
     }
 
-    public void render() {
-        // TODO For now we rebuffer all data every frame
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
-
-        shader.use();
-        shader.uploadMat4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMat4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
-
-        glBindVertexArray(vaoID);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-
-        glDrawElements(GL_TRIANGLES, numSprites * 6, GL_UNSIGNED_INT, 0);
-
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-        glBindVertexArray(0);
-
-        shader.detach();
-    }
-
     private int[] generateIndices() {
         int[] elements = new int[6 * maxBatchSize];
 
-        for (int i = 0; i < elements.length; i++) {
+        for (int i = 0; i < maxBatchSize; i++) {
             loadElementIndices(elements, i);
         }
 
@@ -165,7 +144,7 @@ public class RenderBatch {
         int offsetArrayIndex = 6 * index;
         int offset = 4 * index;
 
-        // 3, 2, 0, 0, 2, 1
+        // 3, 2, 0, 0, 2, 1         7, 6, 4, 4, 6, 5
         // Triangle 1
         elements[offsetArrayIndex] = offset + 3;
         elements[offsetArrayIndex + 1] = offset + 2;

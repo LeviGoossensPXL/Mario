@@ -1,61 +1,11 @@
 package saphire;
 
-import components.FontRenderer;
 import components.SpriteRenderer;
 import org.joml.Vector2f;
-import org.lwjgl.BufferUtils;
-import renderer.Shader;
-import renderer.Texture;
-
-import java.io.File;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+import org.joml.Vector4f;
+import renderer.Renderer;
 
 public class LevelEditorScene extends Scene {
-
-    private float[] vertexArray = {
-            // position                // color                     //
-            100.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1, 1,  // bottom right     0
-            0.0f, 100.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0, 0,  // top left         1
-            100.0f, 100.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1, 0,  // top right        2
-            0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0, 1   // bottom left      3
-    };
-
-    // IMPORTANT: Must be in counter-clockwise order
-    private int[] elementArray = {
-            /*  vertex array order
-                    x1      x2
-
-
-                    x3      x0
-
-
-            counter-clockwise order
-                    x3      x2
-
-
-                    x       x1
-
-                    x2      x
-
-
-                    x3      x1
-             */
-            0, 2, 1, //is different form tutorial
-            0, 1, 3,
-    };
-
-    private int vaoID, vboID, eboID;
-
-    private Shader defaultShader;
-    private Texture testTexture; //test texture
-
-    GameObject testObject;
-    boolean firstTime = true;
 
     public LevelEditorScene() {
 
@@ -63,77 +13,34 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
-        System.out.println("creating test object 1");
-        testObject = new GameObject("test object 1");
-        testObject.addComponent(new FontRenderer());
-        testObject.addComponent(new SpriteRenderer());
-        addGameObjectToScene(this.testObject);
-
+        this.renderer = new Renderer();
         this.camera = new Camera(new Vector2f());
-        defaultShader = new Shader("assets/shaders/default.glsl");
-        defaultShader.compileAndLink();
-        this.testTexture = new Texture(new File("assets/images/testImage.png")); //test texture
 
-        vaoID = glGenVertexArrays();
-        glBindVertexArray(vaoID);
+        int xOffset = 10;
+        int yOffset = 10;
 
+        float totalWidth = (float) (600 - xOffset * 2);
+        float totalHeight = (float) (300 - yOffset * 2);
+        float sizeX = totalWidth / 100.0f;
+        float sizeY = totalHeight / 100.0f;
 
-        FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertexArray.length);
-        vertexBuffer.put(vertexArray).flip();
-
-        vboID = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
-
-        IntBuffer elementBuffer = BufferUtils.createIntBuffer(elementArray.length);
-        elementBuffer.put(elementArray).flip();
-
-        eboID = glGenBuffers();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
-
-        int positionsSize = 3;
-        int colorsSize = 4;
-        int uvSize = 2;
-        int vertexSizeBytes = (positionsSize + colorsSize + uvSize) * Float.BYTES;
-        glVertexAttribPointer(0, positionsSize, GL_FLOAT, false, vertexSizeBytes, 0);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, colorsSize, GL_FLOAT, false, vertexSizeBytes, positionsSize * Float.BYTES);
-        glEnableVertexAttribArray(1);
-
-        glVertexAttribPointer(2, uvSize, GL_FLOAT, false, vertexSizeBytes, (positionsSize + colorsSize) * Float.BYTES);
-        glEnableVertexAttribArray(2);
+        for (int x = 0; x < 100; x++) {
+            for (int y = 0; y < 100; y++) {
+                float xPos = xOffset + (x * sizeX);
+                float yPos = yOffset + (y * sizeY);
+                GameObject gameObject = new GameObject("objX:" + x + "Y:" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
+                gameObject.addComponent(new SpriteRenderer(new Vector4f(xPos / totalWidth, yPos / totalHeight, 1, 1)));
+                this.addGameObjectToScene(gameObject);
+            }
+        }
     }
 
     @Override
     public void update(float dt) {
-        camera.position.x -= dt * 50.0f;
-        defaultShader.use();
-
-        defaultShader.uploadTexture("TEX_SAMPLER", 0);
-        glActiveTexture(GL_TEXTURE0);
-        testTexture.bind();
-
-        defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
-        defaultShader.uploadMat4f("uView", camera.getViewMatrix());
-        glBindVertexArray(vaoID);
-
-        glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0);
-
-        glBindVertexArray(0);
-
-        defaultShader.detach();
-        if (firstTime) {
-            System.out.println("creating test object 2");
-            GameObject go1 = new GameObject("test object 2");
-            go1.addComponent(new SpriteRenderer());
-            addGameObjectToScene(go1);
-            firstTime = false;
-        }
 
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
         }
+        this.renderer.render();
     }
 }

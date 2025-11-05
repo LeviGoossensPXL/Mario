@@ -6,6 +6,9 @@ import saphire.Component;
 
 public class SpriteRenderer extends Component {
 
+    public  SpriteRenderer(Vector4f color) {
+        this.color = color;
+    }
     @Getter
     private Vector4f color;
 
