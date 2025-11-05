@@ -37,7 +37,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-
+        System.out.println("FPS: " + (1.0f / dt));
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
         }
