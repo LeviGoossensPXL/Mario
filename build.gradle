@@ -21,7 +21,7 @@ test {
 
 project.ext.lwjglVersion = "3.3.6"
 project.ext.jomlVersion = "1.10.8"
-project.ext.lwjglNatives = "natives-windows"
+project.ext.lwjglNatives = "natives-linux"
 
 dependencies {
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
