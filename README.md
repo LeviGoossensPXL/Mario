@@ -1,5 +1,5 @@
 making game by following tutorial: https://www.youtube.com/playlist?list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE
-next to do video #11; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE&index=12
+to do video #12; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE&index=13
 
 # progression
 - Start using pull requests
@@ -11,7 +11,7 @@ next to do video #11; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4Xx
 -[x] #10 Entity component system
 -[x] Cleanup code
 -[x] #11 Batch rendering
--[x] #12
+-[x] #12 Resource management
 -[x] 
 -[x] 
 -[x] 
