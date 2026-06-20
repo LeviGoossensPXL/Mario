@@ -3,23 +3,24 @@ next to do video #11; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4Xx
 
 # progression
 - Start using pull requests
--[X] #6 Abstracting shader
--[X] #7 Game camera
--[X] #8 GLSL shader
--[X] #9 Texture loading
--[X] #10 Entity component system
--[X] Cleanup code
--[X] #11 Batch rendering
--[X] #12
--[X] 
--[X] 
--[X] 
--[X] 
--[X] 
--[X]
--[X] 
--[X] 
--[X] 
--[X] 
--[X] 
--[X]
+-[x] #6 Abstracting shader
+-[x] #7 Game camera
+-[x] +1 bouncing square (made for fun and better understanding game camera)
+-[x] #8 GLSL shader
+-[x] #9 Texture loading
+-[x] #10 Entity component system
+-[x] Cleanup code
+-[x] #11 Batch rendering
+-[x] #12
+-[x] 
+-[x] 
+-[x] 
+-[x] 
+-[x] 
+-[x]
+-[x] 
+-[x] 
+-[x] 
+-[x] 
+-[x] 
+-[x]
