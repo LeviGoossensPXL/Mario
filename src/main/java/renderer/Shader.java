@@ -102,6 +102,12 @@ public class Shader {
         use();
         glUniform1i(varLocation, textureID);
     }
+
+    public  void uploadIntArray(String varName, int[] array) {
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform1iv(varLocation, array);
+    }
     // endregion
 
     private String getShaderString(String source, int shaderType) {
