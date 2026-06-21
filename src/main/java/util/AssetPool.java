@@ -11,26 +11,34 @@ public class AssetPool {
     private static Map<String, Shader> shaders = new HashMap<>();
     private static Map<String, Texture> textures = new HashMap<>();
 
+    public static void loadShader(String resourceName) {
+        File file = new File(resourceName);
+        Shader shader = new Shader(resourceName);
+        shader.compileAndLink();
+        shaders.put(file.getAbsolutePath(), shader);
+    }
+
+    public static void loadTexture(String resourceName) {
+        File file = new File(resourceName);
+        Texture texture = new Texture(resourceName);
+        textures.put(file.getAbsolutePath(), texture);
+    }
+
     public static Shader getShader(String resourceName) {
         File file = new File(resourceName);
         if (shaders.containsKey(file.getAbsolutePath())) {
             return shaders.get(file.getAbsolutePath());
-        } else {
-            Shader shader = new Shader(resourceName);
-            shader.compileAndLink();
-            shaders.put(file.getAbsolutePath(), shader);
-            return shader;
         }
+        assert false : "Error: shader with key '" + file.getAbsolutePath() + "' is not found or not loaded";
+        return null;
     }
 
     public static Texture getTexture(String resourceName){
         File file = new File(resourceName);
         if (textures.containsKey(file.getAbsolutePath())) {
             return textures.get(file.getAbsolutePath());
-        } else {
-            Texture texture = new Texture(file.getAbsolutePath());
-            textures.put(file.getAbsolutePath(), texture);
-            return texture;
         }
+        assert false : "Error: texture with key '" + file.getAbsolutePath() + "' is not found or not loaded";
+        return null;
     }
 }
