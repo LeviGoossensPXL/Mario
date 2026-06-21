@@ -1,5 +1,5 @@
-making game by following tutorial: https://www.youtube.com/playlist?list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE
-to do video #12; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE&index=13
+making game by following tutorial: https://www.youtube.com/playlist?list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE  
+to do video #13; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE&index=14
 
 # progression
 - Start using pull requests
@@ -12,7 +12,7 @@ to do video #12; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8
 -[x] Cleanup code
 -[x] #11 Batch rendering
 -[x] #12 Resource management
--[x] 
+-[x] #13 Texture batching
 -[x] 
 -[x] 
 -[x] 
