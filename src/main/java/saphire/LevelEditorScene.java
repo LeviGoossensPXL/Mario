@@ -38,7 +38,7 @@ public class LevelEditorScene extends Scene {
     }
 
     private void loadResources() {
-        AssetPool.getShader("assets/shaders/default.glsl");
+        AssetPool.loadShader("assets/shaders/default.glsl");
     }
 
     @Override
