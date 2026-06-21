@@ -17,11 +17,19 @@ public class LevelEditorScene extends Scene {
         this.renderer = new Renderer();
         this.camera = new Camera(new Vector2f());
 
-        int xOffset = 10;
+        loadResources();
+        GameObject obj1 = new GameObject("object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        obj1.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/testImage.png")));
+        this.addGameObjectToScene(obj1);
+
+        GameObject obj2 = new GameObject("object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
+        obj2.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/testImage.png")));
+        this.addGameObjectToScene(obj2);
+        int xOffset = 800;
         int yOffset = 10;
 
-        float totalWidth = (float) (600 - xOffset * 2);
-        float totalHeight = (float) (300 - yOffset * 2);
+        float totalWidth = (float) (600 - 10 * 2);
+        float totalHeight = (float) (300 - 10 * 2);
         float sizeX = totalWidth / 100.0f;
         float sizeY = totalHeight / 100.0f;
 
@@ -30,15 +38,15 @@ public class LevelEditorScene extends Scene {
                 float xPos = xOffset + (x * sizeX);
                 float yPos = yOffset + (y * sizeY);
                 GameObject gameObject = new GameObject("objX:" + x + "Y:" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
-                gameObject.addComponent(new SpriteRenderer(new Vector4f(xPos / totalWidth, yPos / totalHeight, 1, 1)));
+                gameObject.addComponent(new SpriteRenderer(new Vector4f((xPos - xOffset) / totalWidth, (yPos - yOffset) / totalHeight, 1, 1)));
                 this.addGameObjectToScene(gameObject);
             }
         }
-        loadResources();
     }
 
     private void loadResources() {
         AssetPool.loadShader("assets/shaders/default.glsl");
+        AssetPool.loadTexture("assets/images/testImage.png");
     }
 
     @Override
