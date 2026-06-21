@@ -12,11 +12,10 @@ import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class Texture {
     private int textureID;
-    private File file;
+    private String filepath;
 
-    public Texture(File file) {
-        assert file.exists() && file.isFile() : "Error: File does not exist or is not a file!";
-        this.file = file;
+    public Texture(String filepath) {
+        this.filepath = filepath;
 
         textureID = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, textureID);
@@ -30,13 +29,13 @@ public class Texture {
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
         IntBuffer channels = BufferUtils.createIntBuffer(1);
-        ByteBuffer image = stbi_load(file.getAbsolutePath(), width, height, channels, 0);
+        ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
 
         if (image != null) {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0),
                     0, GL_RGBA, GL_UNSIGNED_BYTE, image);
         } else {
-            assert false : "Error: (texture) could not load image '" + file.getAbsolutePath() + "'";
+            assert false : "Error: (texture) could not load image '" + filepath + "'";
         }
 
         stbi_image_free(image);
