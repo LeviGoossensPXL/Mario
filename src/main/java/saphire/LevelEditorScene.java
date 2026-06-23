@@ -2,6 +2,7 @@ package saphire;
 
 import components.Sprite;
 import components.SpriteRenderer;
+import components.Spritesheet;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Renderer;
@@ -19,12 +20,15 @@ public class LevelEditorScene extends Scene {
         this.camera = new Camera(new Vector2f());
 
         loadResources();
+        Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheet.png");
+
         GameObject obj1 = new GameObject("object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        obj1.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/testImage.png"))));
+        assert spritesheet != null;
+        obj1.addComponent(new SpriteRenderer(spritesheet.getSprite(0)));
         this.addGameObjectToScene(obj1);
 
         GameObject obj2 = new GameObject("object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
-        obj2.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/testImage.png"))));
+        obj2.addComponent(new SpriteRenderer(spritesheet.getSprite(10)));
         this.addGameObjectToScene(obj2);
         int xOffset = 800;
         int yOffset = 10;
@@ -48,6 +52,8 @@ public class LevelEditorScene extends Scene {
     private void loadResources() {
         AssetPool.loadShader("assets/shaders/default.glsl");
         AssetPool.loadTexture("assets/images/testImage.png");
+        AssetPool.loadTexture("assets/images/spritesheet.png");
+        AssetPool.loadSpritesheet("assets/images/spritesheet.png", 16, 16, 26, 0);
     }
 
     @Override
