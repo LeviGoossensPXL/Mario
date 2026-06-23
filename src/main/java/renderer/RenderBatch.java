@@ -7,6 +7,7 @@ import org.joml.Vector4f;
 import saphire.Window;
 import util.AssetPool;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,9 +103,20 @@ public class RenderBatch {
     }
 
     public void render() {
-        // TODO For now we rebuffer all data every frame
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        boolean rebufferData = false;
+        for (int i = 0; i < numSpriteRenderers; i++) {
+            SpriteRenderer spriteRenderer = spriteRenderers[i];
+            if (spriteRenderer.isDirty()) {
+                loadVertexProperties(i);
+                spriteRenderer.setClean();
+                rebufferData = true;
+            }
+        }
+
+        if (rebufferData) {
+            glBindBuffer(GL_ARRAY_BUFFER, vboID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        }
 
         shader.use();
         shader.uploadMat4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());

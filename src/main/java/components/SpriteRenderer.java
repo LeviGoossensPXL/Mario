@@ -15,6 +15,7 @@ public class SpriteRenderer extends Component {
     private Sprite sprite;
 
     private Transform lastTransform;
+    @Getter
     private boolean isDirty = false;
 
     public SpriteRenderer(Vector4f color) {
@@ -55,5 +56,9 @@ public class SpriteRenderer extends Component {
     public void setColor(Vector4f color) {
         this.color = color;
         this.isDirty = true;
+    }
+
+    public void setClean() {
+        this.isDirty = false;
     }
 }
