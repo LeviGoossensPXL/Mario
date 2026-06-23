@@ -18,8 +18,8 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class RenderBatch {
     // Vertex
     // ===========
-    // Pos              Color                           tex coords      text id
-    // float, float,    float, float, float, float,     float, float,   float
+    // Pos              Color                           texture coords      texture id
+    // float, float,    float, float, float, float,     float, float,       float
     private final int POS_SIZE = 2;
     private final int COLOR_SIZE = 4;
     private final int TEX_COORDS_SIZE = 2;
@@ -27,8 +27,8 @@ public class RenderBatch {
 
     private final int POS_OFFSET = 0;
     private final int COLOR_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
-    private final int TEX_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
-    private final int TEX_ID_OFFSET = TEX_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
+    private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
+    private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
     private final int VERTEX_SIZE = 9;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
@@ -76,10 +76,10 @@ public class RenderBatch {
         glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, COLOR_OFFSET);
         glEnableVertexAttribArray(1);
 
-        glVertexAttribPointer(2, TEX_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEX_COORDS_OFFSET);
+        glVertexAttribPointer(2, TEX_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEXTURE_COORDS_OFFSET);
         glEnableVertexAttribArray(2);
 
-        glVertexAttribPointer(3, TEX_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEX_ID_OFFSET);
+        glVertexAttribPointer(3, TEX_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEXTURE_ID_OFFSET);
         glEnableVertexAttribArray(3);
     }
 
@@ -138,7 +138,7 @@ public class RenderBatch {
         int offset = index * 4 * VERTEX_SIZE;
 
         Vector4f color = sprite.getColor();
-        Vector2f[] texCoords = sprite.getTextCoords();
+        Vector2f[] texCoords = sprite.getTextureCoords();
 
         int textureId = 0;
         if (sprite.getTexture() != null) {

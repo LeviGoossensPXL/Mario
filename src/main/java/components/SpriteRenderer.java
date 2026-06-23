@@ -10,7 +10,7 @@ public class SpriteRenderer extends Component {
 
     @Getter
     private Vector4f color;
-    private Vector2f[] textCoords;
+    private Vector2f[] textureCoords;
     @Getter
     private Texture texture;
 
@@ -34,7 +34,7 @@ public class SpriteRenderer extends Component {
 
     }
 
-    public Vector2f[] getTextCoords() {
+    public Vector2f[] getTextureCoords() {
         return new Vector2f[]{
                 new Vector2f(1, 1),
                 new Vector2f(1, 0),
