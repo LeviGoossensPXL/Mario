@@ -1,10 +1,12 @@
 package saphire;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameObject {
-
+    @Getter
     private String name;
     private List<Component> components;
     public Transform transform;

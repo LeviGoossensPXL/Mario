@@ -42,6 +42,10 @@ public class LevelEditorScene extends Scene {
                 this.addGameObjectToScene(gameObject);
             }
         }
+
+        GameObject obj3 = new GameObject("paddle 1", new Transform(new Vector2f(400, 400), new Vector2f(20, 100)));
+        obj3.addComponent(new SpriteRenderer(new Vector4f(0.7f, 0.7f, 0.7f, 0f)));
+        this.addGameObjectToScene(obj3);
     }
 
     private void loadResources() {
@@ -54,6 +58,9 @@ public class LevelEditorScene extends Scene {
         System.out.println("FPS: " + (1.0f / dt));
         for (GameObject gameObject : gameObjects) {
             gameObject.update(dt);
+            if (gameObject.getName().equals("paddle 1")) {
+                System.out.println("hello from paddle 1");
+            }
         }
         this.renderer.render();
     }
