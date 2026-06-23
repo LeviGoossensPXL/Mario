@@ -27,7 +27,7 @@ public class Renderer {
         for (RenderBatch renderBatch : renderBatches) {
             if (renderBatch.isHasRoom()) {
                 Texture texture = spriteRenderer.getTexture();
-                if (texture == null || (renderBatch.hasTexture(texture) || renderBatch.hasTextureRoom())) {
+                if (texture == null || (renderBatch.hasTexture(texture) || renderBatch.hasTextureRoom())) { // TODO: might be unneeded because of if statement in add method in Renderer class.
                     renderBatch.addSpriteRenderer(spriteRenderer);
                     added = true;
                     break;

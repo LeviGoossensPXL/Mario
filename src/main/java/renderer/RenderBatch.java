@@ -89,7 +89,7 @@ public class RenderBatch {
         this.numSpriteRenderers++;
 
         if (spriteRenderer.getTexture() != null) {
-            if (!textures.contains(spriteRenderer.getTexture())) { // TODO: might be unneeded because of if statement in add method.
+            if (!textures.contains(spriteRenderer.getTexture())) { // TODO: might be unneeded because of if statement in add method in Renderer class.
                 textures.add(spriteRenderer.getTexture());
             }
         }
