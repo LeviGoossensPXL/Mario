@@ -32,8 +32,8 @@ public class RenderBatch {
     private final int VERTEX_SIZE = 9;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
-    private SpriteRenderer[] sprites;
-    private int numSprites;
+    private SpriteRenderer[] spriteRenderers;
+    private int numSpriteRenderers;
     @Getter
     private boolean hasRoom;
     private float[] vertices;
@@ -46,12 +46,12 @@ public class RenderBatch {
 
     public RenderBatch(int maxBatchSize) {
         this.shader = AssetPool.getShader("assets/shaders/default.glsl");
-        this.sprites = new SpriteRenderer[maxBatchSize];
+        this.spriteRenderers = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
         // 4 vertices quads
         vertices = new float[maxBatchSize * 4 * VERTEX_SIZE];
-        this.numSprites = 0;
+        this.numSpriteRenderers = 0;
         this.hasRoom = true;
         this.textures = new ArrayList<>();
     }
@@ -83,20 +83,20 @@ public class RenderBatch {
         glEnableVertexAttribArray(3);
     }
 
-    public void addSprite(SpriteRenderer sprite) {
-        int index = this.numSprites;
-        this.sprites[index] = sprite;
-        this.numSprites++;
+    public void addSpriteRenderer(SpriteRenderer spriteRenderer) {
+        int index = this.numSpriteRenderers;
+        this.spriteRenderers[index] = spriteRenderer;
+        this.numSpriteRenderers++;
 
-        if (sprite.getTexture() != null) {
-            if (!textures.contains(sprite.getTexture())) {
-                textures.add(sprite.getTexture());
+        if (spriteRenderer.getTexture() != null) {
+            if (!textures.contains(spriteRenderer.getTexture())) { // TODO: might be unneeded because of if statement in add method.
+                textures.add(spriteRenderer.getTexture());
             }
         }
 
         loadVertexProperties(index);
 
-        if (this.numSprites >= this.maxBatchSize) {
+        if (this.numSpriteRenderers >= this.maxBatchSize) {
             this.hasRoom = false;
         }
     }
@@ -119,7 +119,7 @@ public class RenderBatch {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
-        glDrawElements(GL_TRIANGLES, numSprites * 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, numSpriteRenderers * 6, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
@@ -133,7 +133,7 @@ public class RenderBatch {
     }
 
     private void loadVertexProperties(int index) {
-        SpriteRenderer sprite = sprites[index];
+        SpriteRenderer sprite = spriteRenderers[index];
 
         int offset = index * 4 * VERTEX_SIZE;
 
@@ -203,5 +203,13 @@ public class RenderBatch {
         elements[offsetArrayIndex + 3] = offset;
         elements[offsetArrayIndex + 4] = offset + 2;
         elements[offsetArrayIndex + 5] = offset + 1;
+    }
+
+    public boolean hasTextureRoom() {
+        return this.textures.size() < this.texSlots.length;
+    }
+
+    public boolean hasTexture(Texture texture) {
+        return this.textures.contains(texture);
     }
 }

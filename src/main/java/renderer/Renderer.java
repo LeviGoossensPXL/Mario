@@ -26,16 +26,19 @@ public class Renderer {
         boolean added = false;
         for (RenderBatch renderBatch : renderBatches) {
             if (renderBatch.isHasRoom()) {
-                renderBatch.addSprite(spriteRenderer);
-                added = true;
-                break;
+                Texture texture = spriteRenderer.getTexture();
+                if (texture == null || (renderBatch.hasTexture(texture) || renderBatch.hasTextureRoom())) {
+                    renderBatch.addSpriteRenderer(spriteRenderer);
+                    added = true;
+                    break;
+                }
             }
         }
         if (!added) {
             RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE);
             newBatch.start();
             renderBatches.add(newBatch);
-            newBatch.addSprite(spriteRenderer);
+            newBatch.addSpriteRenderer(spriteRenderer);
         }
     }
 
