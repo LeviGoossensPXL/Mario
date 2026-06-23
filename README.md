@@ -14,6 +14,7 @@ to do video #14; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8
 -[x] #12 Resource management
 -[x] #13 Texture batching
 -[x] +2 try pong (trying to make a simple pong clone for learning. coordinates translation is probably not proper)
+-[x] +3 fix small code issues
 -[x] #14 spritesheets
 -[x] 
 -[x] 
