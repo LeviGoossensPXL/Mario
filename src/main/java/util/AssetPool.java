@@ -29,6 +29,7 @@ public class AssetPool {
 
     public static void loadSpritesheet(String resourceName, int spriteWidth, int spriteHeight, int numSprites, int spacing) {
         File file = new File(resourceName);
+        loadTexture(resourceName);
         Texture texture = getTexture(file.getAbsolutePath());
         Spritesheet spritesheet = new Spritesheet(texture, spriteWidth, spriteHeight, numSprites, spacing);
         spritesheets.put(file.getAbsolutePath(), spritesheet);
