@@ -34,7 +34,7 @@ public class SpriteRenderer extends Component {
 
     }
 
-    public Vector2f[] getTextCoords() {
+    public Vector2f[] getTextureCoords() {
         return new Vector2f[]{
                 new Vector2f(1, 1),
                 new Vector2f(1, 0),
