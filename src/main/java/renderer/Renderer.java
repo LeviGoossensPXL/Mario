@@ -9,10 +9,10 @@ import java.util.List;
 public class Renderer {
 
     private final int MAX_BATCH_SIZE = 1000;
-    private List<RenderBatch> batches;
+    private List<RenderBatch> renderBatches;
 
     public Renderer() {
-        this.batches = new ArrayList<>();
+        this.renderBatches = new ArrayList<>();
     }
 
     public void add(GameObject gameObject) {
@@ -24,7 +24,7 @@ public class Renderer {
 
     private void add(SpriteRenderer spriteRenderer) {
         boolean added = false;
-        for (RenderBatch renderBatch : batches) {
+        for (RenderBatch renderBatch : renderBatches) {
             if (renderBatch.isHasRoom()) {
                 renderBatch.addSprite(spriteRenderer);
                 added = true;
@@ -34,13 +34,13 @@ public class Renderer {
         if (!added) {
             RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE);
             newBatch.start();
-            batches.add(newBatch);
+            renderBatches.add(newBatch);
             newBatch.addSprite(spriteRenderer);
         }
     }
 
     public void render() {
-        for (RenderBatch renderBatch : batches) {
+        for (RenderBatch renderBatch : renderBatches) {
             renderBatch.render();
         }
     }
