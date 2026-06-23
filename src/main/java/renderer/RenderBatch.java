@@ -102,7 +102,10 @@ public class RenderBatch {
     }
 
     public void render() {
-        // TODO For now we rebuffer all data every frame
+        for (int i = 0; i < numSprites; i++) {
+            loadVertexProperties(i);
+        }
+
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 

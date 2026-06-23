@@ -57,10 +57,13 @@ public class LevelEditorScene extends Scene {
     public void update(float dt) {
         System.out.println("FPS: " + (1.0f / dt));
         for (GameObject gameObject : gameObjects) {
-            gameObject.update(dt);
             if (gameObject.getName().equals("paddle 1")) {
                 System.out.println("hello from paddle 1");
+                gameObject.transform.position.y = (500 - MouseListener.getY()) + 100;
+                System.out.println(MouseListener.getY());
+                System.out.println(gameObject.transform.position.y());
             }
+            gameObject.update(dt);
         }
         this.renderer.render();
     }
