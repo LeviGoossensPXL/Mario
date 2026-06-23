@@ -12,7 +12,7 @@ public class MouseListener {
     private double xPos, yPos, lastX, lastY;
 
     private boolean mouseButtonPressed[] = new boolean[3];
-    @Getter
+
     private boolean isDragging;
 
     private MouseListener() {
@@ -91,7 +91,9 @@ public class MouseListener {
         return (float) getInstance().scrollY;
     }
 
-    //isDragging with lombok.@Getter
+    public static boolean getIsDragging() {
+        return getInstance().isDragging;
+    }
 
     public static boolean isMouseButtonDown(int button) {
         if (button >= getInstance().mouseButtonPressed.length) {
