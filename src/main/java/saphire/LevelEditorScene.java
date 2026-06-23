@@ -1,5 +1,6 @@
 package saphire;
 
+import components.Sprite;
 import components.SpriteRenderer;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -19,11 +20,11 @@ public class LevelEditorScene extends Scene {
 
         loadResources();
         GameObject obj1 = new GameObject("object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        obj1.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/testImage.png")));
+        obj1.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/testImage.png"))));
         this.addGameObjectToScene(obj1);
 
         GameObject obj2 = new GameObject("object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
-        obj2.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/testImage.png")));
+        obj2.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/testImage.png"))));
         this.addGameObjectToScene(obj2);
         int xOffset = 800;
         int yOffset = 10;

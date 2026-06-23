@@ -10,17 +10,15 @@ public class SpriteRenderer extends Component {
 
     @Getter
     private Vector4f color;
-    private Vector2f[] textureCoords;
-    @Getter
-    private Texture texture;
+    private Sprite sprite;
 
-    public  SpriteRenderer(Vector4f color) {
-        this.texture = null;
+    public SpriteRenderer(Vector4f color) {
+        this.sprite = new Sprite(null);
         this.color = color;
     }
 
-    public  SpriteRenderer(Texture texture) {
-        this.texture = texture;
+    public SpriteRenderer(Sprite sprite) {
+        this.sprite = sprite;
         this.color = new Vector4f(1, 1, 1, 1);
     }
 
@@ -34,12 +32,11 @@ public class SpriteRenderer extends Component {
 
     }
 
+    public Texture getTexture() {
+        return sprite.getTexture();
+    }
+
     public Vector2f[] getTextureCoords() {
-        return new Vector2f[]{
-                new Vector2f(1, 1),
-                new Vector2f(1, 0),
-                new Vector2f(0, 0),
-                new Vector2f(0, 1),
-        };
+        return sprite.getTextureCoords();
     }
 }
