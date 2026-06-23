@@ -21,7 +21,7 @@ public class Window {
     private int width, height;
     private long glfwWindow;
 
-    public float r = 0, g = 0, b = 0, a = 1;
+    public float r = 0.1f, g = 0.1f, b = 0.7f, a = 1;
 
     private Window() {
         this.width = 1920;
