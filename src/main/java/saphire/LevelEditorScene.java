@@ -32,30 +32,30 @@ public class LevelEditorScene extends Scene {
         obj2.addComponent(new SpriteRenderer(spritesheet.getSprite(10)));
         this.addGameObjectToScene(obj2);
 
-        GameObject obj3 = new GameObject("object 3", new Transform(new Vector2f(400, 100), new Vector2f(224, 32)));
-        obj3.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/spritesheet.png"))));
-        this.addGameObjectToScene(obj3);
+//        GameObject obj3 = new GameObject("object 3", new Transform(new Vector2f(400, 100), new Vector2f(224, 32)));
+//        obj3.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/spritesheet.png"))));
+//        this.addGameObjectToScene(obj3);
 
-        GameObject obj4 = new GameObject("object 4", new Transform(new Vector2f(700, 100), new Vector2f(256, 256)));
-        obj4.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/testImage.png"))));
-        this.addGameObjectToScene(obj4);
-        int xOffset = 800;
-        int yOffset = 10;
-
-        float totalWidth = (float) (600 - 10 * 2);
-        float totalHeight = (float) (300 - 10 * 2);
-        float sizeX = totalWidth / 100.0f;
-        float sizeY = totalHeight / 100.0f;
-
-        for (int x = 0; x < 100; x++) {
-            for (int y = 0; y < 100; y++) {
-                float xPos = xOffset + (x * sizeX);
-                float yPos = yOffset + (y * sizeY);
-                GameObject gameObject = new GameObject("objX:" + x + "Y:" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
-                gameObject.addComponent(new SpriteRenderer(new Vector4f((xPos - xOffset) / totalWidth, (yPos - yOffset) / totalHeight, 1, 1)));
-                this.addGameObjectToScene(gameObject);
-            }
-        }
+//        GameObject obj4 = new GameObject("object 4", new Transform(new Vector2f(700, 100), new Vector2f(256, 256)));
+//        obj4.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/testImage.png"))));
+//        this.addGameObjectToScene(obj4);
+//        int xOffset = 800;
+//        int yOffset = 10;
+//
+//        float totalWidth = (float) (600 - 10 * 2);
+//        float totalHeight = (float) (300 - 10 * 2);
+//        float sizeX = totalWidth / 100.0f;
+//        float sizeY = totalHeight / 100.0f;
+//
+//        for (int x = 0; x < 100; x++) {
+//            for (int y = 0; y < 100; y++) {
+//                float xPos = xOffset + (x * sizeX);
+//                float yPos = yOffset + (y * sizeY);
+//                GameObject gameObject = new GameObject("objX:" + x + "Y:" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
+//                gameObject.addComponent(new SpriteRenderer(new Vector4f((xPos - xOffset) / totalWidth, (yPos - yOffset) / totalHeight, 1, 1)));
+//                this.addGameObjectToScene(gameObject);
+//            }
+//        }
     }
 
     private void loadResources() {

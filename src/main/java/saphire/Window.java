@@ -21,7 +21,7 @@ public class Window {
     private int width, height;
     private long glfwWindow;
 
-    public float r = 0, g = 0, b = 0, a = 1;
+    public float r = 1, g = 1, b = 1, a = 1;
 
     private Window() {
         this.width = 1920;
@@ -99,6 +99,10 @@ public class Window {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
         Window.changeScene(SceneType.LevelEditorScene);
     }
 
