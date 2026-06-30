@@ -1,5 +1,7 @@
 package saphire;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,19 +10,22 @@ public class GameObject {
     private String name;
     private List<Component> components;
     public Transform transform;
+    @Getter
+    private int zIndex; // greater zIndex is on top
 
     public GameObject(String name) {
-        init(name, new Transform());
+        init(name, new Transform(), 0);
     }
 
-    public GameObject(String name, Transform transform) {
-        init(name, transform);
+    public GameObject(String name, Transform transform, int zIndex) {
+        init(name, transform, zIndex);
     }
 
-    private void init(String name, Transform transform) {
+    private void init(String name, Transform transform, int zIndex) {
         this.name = name;
         this.components = new ArrayList<>();
         this.transform = transform;
+        this.zIndex = zIndex;
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {

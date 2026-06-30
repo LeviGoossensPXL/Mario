@@ -23,13 +23,14 @@ public class LevelEditorScene extends Scene {
         loadResources();
         Spritesheet spritesheet = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
-        gameObj1 = new GameObject("object 1 (sprite 0)", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        assert spritesheet != null;
-        gameObj1.addComponent(new SpriteRenderer(spritesheet.getSprite(0)));
+        gameObj1 = new GameObject("object 1 (sprite 0)", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)), 1);
+//        gameObj1.addComponent(new SpriteRenderer(spritesheet.getSprite(0)));
+        gameObj1.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/blendImage1.png"))));
         this.addGameObjectToScene(gameObj1);
 
-        GameObject obj2 = new GameObject("object 2 (sprite 10)", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
-        obj2.addComponent(new SpriteRenderer(spritesheet.getSprite(10)));
+        GameObject obj2 = new GameObject("object 2 (sprite 10)", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 2);
+//        obj2.addComponent(new SpriteRenderer(spritesheet.getSprite(10)));
+        obj2.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/blendImage2.png"))));
         this.addGameObjectToScene(obj2);
 
 //        GameObject obj3 = new GameObject("object 3", new Transform(new Vector2f(400, 100), new Vector2f(224, 32)));
@@ -62,6 +63,8 @@ public class LevelEditorScene extends Scene {
         AssetPool.loadShader("assets/shaders/default.glsl");
         AssetPool.loadTexture("assets/images/testImage.png");
         AssetPool.loadSpritesheet("assets/images/spritesheet.png", 16, 16, 26, 0);
+        AssetPool.loadTexture("assets/images/blendImage1.png");
+        AssetPool.loadTexture("assets/images/blendImage2.png");
     }
 
     @Override

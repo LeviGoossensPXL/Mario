@@ -4,6 +4,7 @@ import components.SpriteRenderer;
 import saphire.GameObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Renderer {
@@ -25,7 +26,7 @@ public class Renderer {
     private void add(SpriteRenderer spriteRenderer) {
         boolean added = false;
         for (RenderBatch renderBatch : renderBatches) {
-            if (renderBatch.isHasRoom()) {
+            if (renderBatch.isHasRoom() && renderBatch.getZIndex() == spriteRenderer.gameObject.getZIndex()) {
                 Texture texture = spriteRenderer.getTexture();
                 if (texture == null || (renderBatch.hasTexture(texture) || renderBatch.hasTextureRoom())) { // TODO: might be unneeded because of if statement in add method in Renderer class.
                     renderBatch.addSpriteRenderer(spriteRenderer);
@@ -35,10 +36,11 @@ public class Renderer {
             }
         }
         if (!added) {
-            RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE);
+            RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE, spriteRenderer.gameObject.getZIndex());
             newBatch.start();
             renderBatches.add(newBatch);
             newBatch.addSpriteRenderer(spriteRenderer);
+            Collections.sort(renderBatches);
         }
     }
 
