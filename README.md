@@ -18,7 +18,7 @@ to do video #16; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8
 -[x] #14 spritesheets
 -[x] #15 Dirty Flags in Rendering
 -[x] #16 Alpha Blending and Z-Indexing
--[x]
+-[x] #17 integrating ImGui
 -[x] 
 -[x] 
 -[x] 
