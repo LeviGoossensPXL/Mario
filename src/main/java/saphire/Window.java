@@ -1,6 +1,7 @@
 package saphire;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -16,16 +17,18 @@ public class Window {
     private static final Window instance = new Window();
     @Getter
     private static Scene currentScene = new LevelEditorScene();
+    @Getter @Setter
+    private static int width, height;
 
     private String title;
-    private int width, height;
     private long glfwWindow;
 
     public float r = 1, g = 1, b = 1, a = 1;
+    private ImGuiLayer imguiLayer;
 
     private Window() {
-        this.width = 1920;
-        this.height = 1080;
+        width = 1920;
+        height = 1080;
         this.title = "Mario Maker";
     }
 
@@ -84,6 +87,10 @@ public class Window {
 
         MouseListener.registerCallbacks(glfwWindow);
         KeyListener.registerCallbacks(glfwWindow);
+        glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
+            Window.setWidth(newWidth);
+            Window.setHeight(newHeight);
+        });
 
         //make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
@@ -102,6 +109,8 @@ public class Window {
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        this.imguiLayer = new ImGuiLayer(glfwWindow);
+        this.imguiLayer.init();
 
         Window.changeScene(SceneType.LevelEditorScene);
     }
@@ -121,6 +130,7 @@ public class Window {
                 currentScene.update(deltaTime);
             }
 
+            this.imguiLayer.update(deltaTime);
             glfwSwapBuffers(glfwWindow);
 
             endTime = (float)glfwGetTime();
