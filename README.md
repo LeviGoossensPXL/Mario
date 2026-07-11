@@ -1,5 +1,5 @@
 making game by following tutorial: https://www.youtube.com/playlist?list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE  
-to do video #16; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8AKuEAlwNXDxr99e3woGE&index=17
+to do video #18.
 
 # progression
 - Start using pull requests
@@ -19,7 +19,7 @@ to do video #16; https://www.youtube.com/watch?v=oDh80Hmv7jM&list=PLtrSb4XxIVbp8
 -[x] #15 Dirty Flags in Rendering
 -[x] #16 Alpha Blending and Z-Indexing
 -[x] #17 integrating ImGui
--[x] 
+-[x] #18 ImGui Fonts and Scene Integration
 -[x] 
 -[x] 
 -[x] 
