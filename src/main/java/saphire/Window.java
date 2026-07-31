@@ -57,6 +57,7 @@ public class Window {
         init();
         loop();
 
+        this.imguiLayer.destroy();
         //cleanup glfw
         glfwFreeCallbacks(glfwWindow);
         glfwDestroyWindow(glfwWindow);
@@ -130,7 +131,7 @@ public class Window {
                 currentScene.update(deltaTime);
             }
 
-            this.imguiLayer.update(deltaTime);
+            this.imguiLayer.update(deltaTime, currentScene);
             glfwSwapBuffers(glfwWindow);
 
             endTime = (float)glfwGetTime();

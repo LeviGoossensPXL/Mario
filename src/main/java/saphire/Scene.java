@@ -1,5 +1,6 @@
 package saphire;
 
+import imgui.ImGui;
 import lombok.Getter;
 import renderer.Renderer;
 
@@ -12,6 +13,7 @@ public abstract class Scene {
     protected Camera camera;
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();
+    protected GameObject activeGameObject;
 
     public Scene() {
 
@@ -40,4 +42,17 @@ public abstract class Scene {
     }
 
     public abstract void update(float dt);
+
+    public void sceneImgui() {
+        if (activeGameObject != null) {
+            ImGui.begin("Inspector");
+            activeGameObject.imgui();
+            ImGui.end();
+        }
+        imgui();
+    }
+
+    public void imgui() {
+
+    }
 }

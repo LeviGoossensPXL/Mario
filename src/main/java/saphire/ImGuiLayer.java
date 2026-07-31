@@ -1,6 +1,5 @@
 package saphire;
 
-import imgui.ImFont;
 import imgui.ImGui;
 import imgui.ImGuiIO;
 import imgui.flag.ImGuiBackendFlags;
@@ -25,7 +24,7 @@ public class ImGuiLayer {
         ImGui.createContext();
 
         final ImGuiIO io = ImGui.getIO();
-        io.setIniFilename(null);
+        io.setIniFilename("temp.ini");
         io.setConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
         io.setBackendFlags(ImGuiBackendFlags.HasMouseCursors);
         io.setBackendPlatformName("imgui_java_impl_glfw");
@@ -38,7 +37,7 @@ public class ImGuiLayer {
         imGuiGl3.init("#version 460 core");
     }
 
-    public void update(float dt) {
+    public void update(float dt, Scene currentScene) {
         startFrame(dt);
 
         imGuiGlfw.newFrame();
@@ -46,6 +45,7 @@ public class ImGuiLayer {
 
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         ImGui.newFrame();
+        currentScene.sceneImgui();
         ImGui.showDemoWindow();
         ImGui.render();
         imGuiGl3.renderDrawData(ImGui.getDrawData());
@@ -73,8 +73,9 @@ public class ImGuiLayer {
     }
 
     public void destroy() {
+        ImGui.saveIniSettingsToDisk(ImGui.getIO().getIniFilename());
         imGuiGl3.shutdown();
-//        imGuiGlfw.shutdown();
+        imGuiGlfw.shutdown();
         ImGui.destroyContext();
     }
 }
